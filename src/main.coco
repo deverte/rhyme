@@ -1,0 +1,68 @@
+import sys
+import os
+import toml
+import ramda as R
+import typer
+from box import Box
+
+def raisef(callback, *args, **kwargs):
+    raise callback(*args, **kwargs)
+
+read_pyproject = R.try_catch(
+    toml.load,
+    (err, value) -> f'There is no {value} file in current directory.' |>\
+                    raisef$(typer.Exit, ?)
+)
+
+scripts_lens = (-> _ |> Box |> .rhyme |> .scripts)
+
+get_rhyme = R.try_catch(
+    scripts_lens,
+    (err, value) -> 'There is no "[rhyme.scripts]" section in `pyproject.toml`.' |>\
+                    raisef$(typer.Exit, ?)
+)
+
+get_script = (script_name, rhyme_scripts) -> R.try_catch(
+    .[script_name],
+    (err, value) -> f'There is no "{script_name}" script in [rhyme.scripts].' |>\
+                    raisef$(typer.Exit, ?)
+)(rhyme_scripts)
+
+execute_script = R.try_catch(
+    os.system,
+    (err, value) -> err |>\
+                    raisef$(err, ?)
+)
+
+app = typer.Typer(
+    help='Script executor for Poetry (Python package manager).',
+    add_completion=False
+)
+
+@app.command()
+def run(
+    script: str,
+    globally: bool = typer.Option(
+        False,
+        '--global',
+        flag_value=True,
+        help='Run cpecified command in the global environment (without `poetry run COMMAND`).'
+    )
+):
+    """
+    Run specified command in the current Poetry environment (`poetry run COMMAND`).
+    """
+
+    'pyproject.toml' |>\
+    read_pyproject |>\
+    get_rhyme |>\
+    get_script$(script, ?) |>\
+    R.if_else(
+        R.always(R.equals(True, globally)),
+        R.identity,
+        R.concat('poetry run ')
+    ) |>\
+    execute_script
+
+if (__name__ == '__main__'):
+    app()

@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "rhyme"
+version = "0.1.0"
+description = "Script executor for Poetry (Python package manager)."
+authors = ["deverte <deverte@ya.ru>"]
+
+[tool.poetry.scripts]
+start = "rhyme.main:app"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+ramda = "^0.5.5"
+toml = "^0.10.0"
+python-box = "^4.2.2"
+typer = "^0.1.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+coconut = {extras = ["watch"], version = "^1.4.3"}
+pyinstaller = "^3.6"
+pywin32-ctypes = "^0.2.0"
+pefile = "^2019.4.18"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
