@@ -18,15 +18,13 @@ Script executor for `Poetry` (Python package manager).
 ## About
 Rhyme lets you to write shell scripts inside `Poetry` `pyproject.toml` file.
 
-Example:  
+Example (only [rhyme.scripts] section):  
 `pyproject.toml`
 ```toml
-...
 [rhyme.scripts]
 compile = "poetry run coconut src rhyme -a"
 watch = "poetry run coconut src rhyme -a -w"
 build = "pyinstaller ./rhyme/main.py --distpath ./dist -F -p ./.venv"
-...
 ```
 
 And to execute these scripts just run commands:
@@ -68,7 +66,7 @@ Run cpecified command in the global environment (without `poetry run COMMAND`).
 ## Packages
 Packages used in the `Rhyme`:
 
-**work**  
+**work**:  
 [ramda](https://github.com/slavaGanzin/ramda.py)  
 [toml](https://github.com/uiri/toml)  
 [python-box](https://github.com/cdgriffith/Box)  
