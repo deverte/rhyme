@@ -1,6 +1,6 @@
 # Rhyme
 
-Script executor for `Poetry` (Python package manager).
+Script executor for [Poetry](https://python-poetry.org/) (Python package manager).
 
 *Note: now there is only `Windows` releases. If there are any requests, I can build `GNU/Linux` version.*
 
@@ -16,7 +16,7 @@ Script executor for `Poetry` (Python package manager).
 
 
 ## About
-Rhyme lets you to write shell scripts inside `Poetry` `pyproject.toml` file.
+Rhyme lets you to write shell scripts inside [Poetry](https://python-poetry.org/) `pyproject.toml` file.
 
 Example (only [rhyme.scripts] section):  
 `pyproject.toml`
