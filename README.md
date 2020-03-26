@@ -22,8 +22,8 @@ Example (only [rhyme.scripts] section):
 `pyproject.toml`
 ```toml
 [rhyme.scripts]
-compile = "poetry run coconut src rhyme -a"
-watch = "poetry run coconut src rhyme -a -w"
+compile = "coconut src rhyme -a"
+watch = "coconut src rhyme -a -w"
 build = "pyinstaller ./rhyme/main.py --distpath ./dist -F -p ./.venv"
 ```
 
